@@ -1,0 +1,4 @@
+rssy
+====
+
+RSS frontend, emailer
