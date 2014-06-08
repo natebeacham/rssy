@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+	<head>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/foundation.css') }}" type="text/css" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/rssy.css') }}" type="text/css" />
+
+		<link rel="shortcut icon" href="{{ url_for('static', filename='img/rss.png') }}" />
+
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+		<script src="{{ url_for('static', filename='js/vendor/modernizr.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/foundation/foundation.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/foundation/foundation.dropdown.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/foundation/foundation.topbar.js') }}"></script>
+
+		<title>{% block title %}rssy{% endblock %}</title>
+
+		<script>
+			$(function() {
+				$(document).foundation();
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="row">
+			<div class="large-12 medium-12 small-12 columns">
+				<h2>{% block pagetitle %}rssy{% endblock %}</h2>
+
+				<hr>
+
+				{% block content %}{% endblock %}
+			</div>
+		</div>
+	</body>
+</html>

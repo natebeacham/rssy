@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% for item in items %}
+		<div>
+			<h4><a href="{{ item.link }}" target="_blank">{{ item.title|safe }}</a></h4>
+
+			{% if item.summary %}
+				<div>
+					{{ item.summary|safe }}
+				</div>
+			{% endif %}
+
+			<div class="meta">
+				{{ item.feed }} | {{ item.timestamp }}
+			</div>
+		</div>
+
+		<hr>
+	{% endfor %}
+
+	<ul class="pagination">
+		{% for page in db.page_range() %}
+			<li {% if page == page_num %} class="current" {% endif %}><a href="?p={{ page }}">{{ page }}</a></li>
+		{% endfor %}
+	</ul>
+
+	<hr>
+{% endblock %}
