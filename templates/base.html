@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/rssy.css') }}" type="text/css" />
 
 		<link rel="shortcut icon" href="{{ url_for('static', filename='img/rss.png') }}" />
+		<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 
@@ -13,23 +14,39 @@
 		<script src="{{ url_for('static', filename='js/foundation/foundation.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/foundation/foundation.dropdown.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/foundation/foundation.topbar.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/foundation/foundation.clearing.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/rssy.js') }}"></script>
 
-		<title>{% block title %}rssy{% endblock %}</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-		<script>
-			$(function() {
-				$(document).foundation();
-			});
-		</script>
+		<title>{% block title %}rssy {% if page_num %}| page {{ page_num }}{% endif %}{% endblock %}</title>
 	</head>
 
 	<body>
+		{% if is_authenticated %}
+		<div class="fixed">
+			<nav class="top-bar" data-topbar>
+				<ul class="title-area">
+					<li class="name">
+						<h1><a href="/">{% block pagetitle %}rssy{% endblock %}</a></h1>
+					</li>
+					<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
+				</ul>
+
+				<section class="top-bar-section">
+					<ul class="right">
+						<li>
+							<a href="/logout/">Log Out</a>
+						</li>
+					</ul>
+				</section>
+			</nav>
+		</div>
+		{% endif %}
+
 		<div class="row">
 			<div class="large-12 medium-12 small-12 columns">
-				<h2>{% block pagetitle %}rssy{% endblock %}</h2>
-
-				<hr>
-
 				{% block content %}{% endblock %}
 			</div>
 		</div>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Add RSS Feed | rssy{% endblock %}
+{% block pagetitle %}Add RSS Feed{% endblock %}
+
+{% block content %}
+	<form action="." method="POST">
+		<label for="id_url">URL</label>
+
+		<input type="text" id="id_url" name="url" placeholder="http://example.com/feed.rss"></input>
+
+		<button class="button tiny" type="submit">Submit</button>
+	</form>
+{% endblock %}

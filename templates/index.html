@@ -6,24 +6,29 @@
 			<h4><a href="{{ item.link }}" target="_blank">{{ item.title|safe }}</a></h4>
 
 			{% if item.summary %}
-				<div>
+				<div class="summary">
 					{{ item.summary|safe }}
 				</div>
 			{% endif %}
 
 			<div class="meta">
-				{{ item.feed }} | {{ item.timestamp }}
+				{% if item.author %}<span class="label secondary round">{{ item.author }}</span>{% endif %}
+				<span class="label secondary round">{{ item.feed }}</span>
+				<span class="label secondary round">{{ item.timestamp }}</span>
+				{% if item.tags %}<span class="label secondary round">Tagged in: {{ item.tags }}</span>{% endif %}
 			</div>
 		</div>
 
 		<hr>
 	{% endfor %}
 
-	<ul class="pagination">
-		{% for page in db.page_range() %}
-			<li {% if page == page_num %} class="current" {% endif %}><a href="?p={{ page }}">{{ page }}</a></li>
-		{% endfor %}
-	</ul>
+	<div class="pagination-centered">
+		<ul class="pagination">
+			{% for page in db.page_range() %}
+				<li {% if page == page_num %} class="current" {% endif %}><a href="?p={{ page }}">{{ page }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
 
 	<hr>
 {% endblock %}
