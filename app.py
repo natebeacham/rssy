@@ -17,8 +17,6 @@ from flask import Flask, session, redirect, \
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 
-app.debug = True
-
 redis = redispy.StrictRedis(
 	host='localhost',
 	port=6379,
