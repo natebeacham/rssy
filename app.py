@@ -214,6 +214,10 @@ def add_feed():
 
 	return render_template('add.html', is_authenticated=is_authenticated(),)
 
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('404.html'), 404
+
 if __name__ == '__main__':
 	for feed in app.config['FEEDS']:
 		db.push_feed(feed)
