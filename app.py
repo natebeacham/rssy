@@ -82,9 +82,13 @@ class DB(object):
 
 			con = smtplib.SMTP("smtp.gmail.com:587")
 			con.starttls()
-			con.login(app.config['GMAIL_USER'], app.config['GMAIL_PASSWORD'])
-			con.sendmail(app.config['FROM'], [email], msg.as_string())
-			con.quit()
+			try:
+				con.login(app.config['GMAIL_USER'], app.config['GMAIL_PASSWORD'])
+			except Exception, e:
+				print e
+			else:
+				con.sendmail(app.config['FROM'], [email], msg.as_string())
+				con.quit()
 
 	def __getitem__(self, sl):
 		if not isinstance(sl, slice):
