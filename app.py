@@ -5,6 +5,7 @@ import random
 import string
 import smtplib
 import datetime
+import premailer
 import threading
 import feedparser
 
@@ -86,6 +87,13 @@ class DB(object):
 		        con = None
 
 		if con:
+			with app.test_request_context('/'):
+				rendered = premailer.transform(
+					render_template('mail.html',
+						entry=entry,
+					)
+				)
+
 			for email in app.config['EMAILS']:
 				msg = MIMEMultipart('alternative')
 				msg['Subject'] = (u'rssy | %s:  %s' % (entry['feed'], entry['title'])).encode('utf-8')
@@ -93,7 +101,7 @@ class DB(object):
 				msg['To'] = email
 
 				msg.attach(MIMEText(entry['summary'], 'plain'))
-				msg.attach(MIMEText(entry['summary'], 'html'))
+				msg.attach(MIMEText(rendered, 'html'))
 
 				con.sendmail(app.config['FROM'], [email], msg.as_string())
 
