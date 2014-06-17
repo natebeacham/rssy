@@ -25,15 +25,6 @@ redis = redispy.StrictRedis(
 	db=1
 )
 
-con = smtplib.SMTP("smtp.gmail.com:587")
-con.starttls()
-
-try:
-	con.login(app.config['GMAIL_USER'], app.config['GMAIL_PASSWORD'])
-except Exception, e:
-	print e
-	con = None
-
 PER_PAGE = 10
 
 class DB(object):
@@ -85,6 +76,15 @@ class DB(object):
 			self.push_entry(url, feed, entry)
 
 	def notify(self, entry):
+		con = smtplib.SMTP("smtp.gmail.com:587")
+		con.starttls()
+
+		try:
+		        con.login(app.config['GMAIL_USER'], app.config['GMAIL_PASSWORD'])
+		except Exception, e:
+		        print e
+		        con = None
+
 		if con:
 			for email in app.config['EMAILS']:
 				msg = MIMEMultipart('alternative')
@@ -218,11 +218,10 @@ def add_feed():
 def page_not_found(e):
 	return render_template('404.html'), 404
 
-if __name__ == '__main__':
-	for feed in app.config['FEEDS']:
-		db.push_feed(feed)
-
+for feed in app.config['FEEDS']:
+	db.push_feed(feed)
 	populator = PopulationThread()
 	populator.start()
 
+if __name__ == '__main__':
 	app.run(host='0.0.0.0', port=4004)
